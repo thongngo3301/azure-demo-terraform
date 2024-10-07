@@ -61,6 +61,6 @@ psql_server:
 
 acr:
   sku: Standard
-  admin_enabled: false
+  admin_enabled: true
   public_access_enabled: true
   anonymous_pull_enabled: true
