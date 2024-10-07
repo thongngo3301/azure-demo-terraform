@@ -1,7 +1,7 @@
 resource "random_string" "db_pass" {
   length           = 16
   special          = true
-  override_special = "/@£$"
+  override_special = "=@$!"
 }
 
 resource "azurerm_resource_group" "rg" {
