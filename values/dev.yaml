@@ -1,0 +1,66 @@
+tags:
+  Environment: DEV
+
+vnet:
+  cidr:
+    - 10.0.0.0/16
+  subnets:
+    - name: subnet1
+      prefix: 10.0.1.0/24
+      service_endpoints:
+        - Microsoft.Web
+        - Microsoft.Sql
+      delegations:
+        Microsoft.Web.serverFarms:
+          service_name: Microsoft.Web/serverFarms
+          service_actions:
+            - Microsoft.Network/virtualNetworks/subnets/action
+    - name: subnet2
+      prefix: 10.0.2.0/24
+      service_endpoints:
+        - Microsoft.Storage
+        - Microsoft.Sql
+      delegations:
+        Microsoft.Sql.managedInstances:
+          service_name: Microsoft.Sql/managedInstances
+          service_actions:
+            - Microsoft.Network/virtualNetworks/subnets/join/action
+            - Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action
+            - Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action
+    - name: subnet3
+      prefix: 10.0.3.0/24
+      service_endpoints:
+        - Microsoft.AzureActiveDirectory
+
+psql_server:
+  sku: GP_Gen5_2
+  storage_mb: 5120
+  auto_grow_enabled: false
+  backup_retention_days: 7
+  geo_redundant_backup_enabled: false
+  admin_login: login
+  server_version: 9.5
+  ssl_enabled: false
+  ssl_min_tls_version: TLSEnforcementDisabled
+  public_access_enabled: true
+  db_names:
+    - my_db1
+    - my_db2
+  db_charset: UTF8
+  db_collation: "English_United States.1252"
+  fw_rules:
+    - name: allow_subnet1
+      start_ip: 10.0.1.1
+      end_ip: 10.0.1.254
+    - name: allow_subnet2
+      start_ip: 10.0.2.1
+      end_ip: 10.0.2.254
+  vnet_rules:
+    - subnet1
+    - subnet2
+
+acr:
+  sku: Standard
+  admin_enabled: false
+  public_access_enabled: true
+  anonymous_pull_enabled: true
