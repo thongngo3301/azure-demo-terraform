@@ -8,8 +8,8 @@ terraform {
 }
 
 provider "azurerm" {
-  environment     = "public"
-  use_oidc        = true
+  environment = "public"
+  use_oidc    = true
   features {
     resource_group {
       prevent_deletion_if_contains_resources = false
