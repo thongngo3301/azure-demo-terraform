@@ -12,10 +12,9 @@ on:
       environment:
         description: "Select the environment to deploy"
         required: true
-        default: sandbox
+        default: squad1
         type: choice
         options:
-          - sandbox
           - squad1
           - squad2
           - squad3
